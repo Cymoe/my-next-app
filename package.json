@@ -4,21 +4,29 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:verbose": "NODE_OPTIONS='--inspect' next dev",
+    "clear-cache": "rm -rf .next",
+    "dev:clear": "npm run clear-cache && npm run dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.45.5",
+    "next": "14.2.15",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.15"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
+    "@swc/core": "^1.7.36",
+    "@types/node": "^20.16.12",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/yargs": "^17.0.33",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "supabase": "^1.204.3",
+    "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   }
 }
