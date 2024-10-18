@@ -1,8 +1,18 @@
 'use client';
 
+import React from 'react';
 import TaskItem from './TaskItem';
 
-export default function TaskList({ tasks }) {
+// Define the Task interface
+interface Task {
+  id: number;
+  title: string;
+  due_date: string | undefined;  // Changed from string | null to string | undefined
+  completed: boolean;
+}
+
+// Update the component to use the Task interface
+export default function TaskList({ tasks }: { tasks: Task[] }) {
   if (tasks.length === 0) {
     return <div>No tasks found. Create a new task to get started!</div>
   }

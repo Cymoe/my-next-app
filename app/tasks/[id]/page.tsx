@@ -1,16 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getTask, updateTaskAction, deleteTaskAction } from '../actions';
 
+// Add this interface
+interface Task {
+  id: number;
+  title: string;
+  due_date: string | null;
+  completed: boolean;
+}
+
 export default function TaskPage({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const [task, setTask] = useState(null);
+  // Update the state type
+  const [task, setTask] = useState<Task | null>(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  useState(() => {
+  useEffect(() => {
     async function fetchTask() {
       const fetchedTask = await getTask(parseInt(params.id));
       setTask(fetchedTask);
@@ -60,7 +69,7 @@ export default function TaskPage({ params }: { params: { id: string } }) {
               id="due_date"
               name="due_date"
               type="date"
-              defaultValue={task.due_date}
+              defaultValue={task.due_date || ''}
             />
           </div>
           <div className="mb-4">

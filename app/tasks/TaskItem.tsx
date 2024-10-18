@@ -5,7 +5,14 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { updateTaskAction, deleteTaskAction } from './actions';
 
-export default function TaskItem({ task }) {
+interface Task {
+  id: number;
+  title: string;
+  completed: boolean;
+  due_date?: string;
+}
+
+export default function TaskItem({ task }: { task: Task }) {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 

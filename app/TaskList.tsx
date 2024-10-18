@@ -1,8 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import TaskItem from './TaskItem';
 
-export default function TaskList() {
+interface Task {
+  id: number;
+  title: string;
+  completed: boolean;
+  due_date?: string;
+}
+
+export default function TaskList({ tasks }: { tasks: Task[] }) {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -46,4 +53,3 @@ export default function TaskList() {
     </ul>
   );
 }
-
