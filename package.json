@@ -9,7 +9,8 @@
     "dev:clear": "npm run clear-cache && npm run dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed-production": "ts-node scripts/seed-production-tasks.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.5",

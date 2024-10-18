@@ -18,18 +18,38 @@ export default function CreateTaskForm({ onTaskCreated }: { onTaskCreated?: (tas
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
 
-  async function handleSubmit(formData: FormData) {
-    const newTask = await createTask(formData);
-    if (newTask) {
-      if (onTaskCreated) {
-        onTaskCreated(newTask);
+  const handleSubmit = async (formData: FormData) => {
+    const newTask = {
+      id: Date.now(), // Temporary ID
+      title: formData.get('title') as string,
+      due_date: formData.get('due_date') as string,
+      completed: false,
+    };
+
+    // Optimistic update
+    if (typeof onTaskCreated === 'function') {
+      onTaskCreated(newTask);
+    }
+
+    try {
+      const createdTask = await createTask(formData);
+      // Update the task with the real ID from the server
+      if (typeof onTaskCreated === 'function') {
+        onTaskCreated(createdTask);
       } else {
         // If onTaskCreated is not provided, refresh the page
         router.refresh();
       }
-      formRef.current?.reset();
+    } catch (error) {
+      console.error('Error creating task:', error);
+      // Remove the optimistic task if there was an error
+      if (typeof onTaskCreated === 'function') {
+        onTaskCreated(null);
+      }
     }
-  }
+
+    formRef.current?.reset();
+  };
 
   return (
     <form 
